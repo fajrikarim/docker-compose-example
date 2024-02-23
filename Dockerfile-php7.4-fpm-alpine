@@ -1,5 +1,10 @@
 FROM php:7.4-fpm-alpine
 
+ENV PHP_INI_DIR /usr/local/etc/php
+
+RUN apk update && apk add tzdata
+ENV TZ=Asia/Jakarta
+
 WORKDIR /code
 
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
