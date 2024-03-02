@@ -15,7 +15,7 @@ services:
       - ./logs/nginx/:/var/log/nginx/
     environment:
       TZ: Asia/Jakarta
-    links:
+    depends_on:
       - php
     restart: always
 
@@ -24,7 +24,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-php7.4-fpm-alpine
-    image: php:7.4-fpm-alpine
     volumes:
       - ./code:/code
       - ./php_conf/php.ini:/usr/local/etc/php/php.ini
