@@ -1,0 +1,33 @@
+FROM php:7.4-fpm-buster
+
+ENV PHP_INI_DIR /usr/local/etc/php
+
+ENV TZ=Asia/Jakarta
+
+WORKDIR /code
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    jpegoptim optipng pngquant gifsicle \
+    locales \
+    zip \
+    unzip \
+    libpq-dev \
+    libzip-dev
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install mbstring exif pcntl bcmath zip
+RUN docker-php-ext-install -j$(nproc) pdo pdo_pgsql pgsql
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
+RUN docker-php-ext-install gd

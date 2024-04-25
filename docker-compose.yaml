@@ -23,7 +23,7 @@ services:
     container_name: name-php
     build:
       context: .
-      dockerfile: Dockerfile-php7.4-fpm-alpine
+      dockerfile: Dockerfile-php7.4-buster
     volumes:
       - ./code:/code
       - ./php_conf/php.ini:/usr/local/etc/php/php.ini
