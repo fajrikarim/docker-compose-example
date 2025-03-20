@@ -27,6 +27,8 @@ services:
     volumes:
       - ./code:/code
       - ./php_conf/php.ini:/usr/local/etc/php/php.ini
+      - ./php_conf/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./php_conf/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     restart: always
     environment:
       TZ: Asia/Jakarta

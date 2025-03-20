@@ -31,3 +31,8 @@ RUN docker-php-ext-install -j$(nproc) pdo pdo_pgsql pgsql
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install gd
+
+RUN pecl install redis \
+  && docker-php-ext-enable redis
+
+USER www-data
