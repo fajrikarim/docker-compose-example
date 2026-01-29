@@ -6,6 +6,14 @@ ENV TZ=Asia/Jakarta
 
 WORKDIR /code
 
+# ============================
+# Fix Debian Buster EOL repo
+# ============================
+RUN sed -i 's|deb.debian.org/debian|archive.debian.org/debian|g' /etc/apt/sources.list && \
+    sed -i 's|security.debian.org|archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until && \
+    echo 'Acquire::Check-Date "false";' >> /etc/apt/apt.conf.d/99no-check-valid-until
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
