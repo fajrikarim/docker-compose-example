@@ -23,12 +23,12 @@ services:
     container_name: name-php
     build:
       context: .
-      dockerfile: Dockerfile-php7.4-buster
+      dockerfile: Dockerfile-php8.5
     volumes:
       - ./code:/code
       - ./php_conf/php.ini:/usr/local/etc/php/php.ini
       - ./php_conf/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./php_conf/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      # - ./php_conf/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini ##matikan karna untuk production tidak perlu
     restart: always
     environment:
       TZ: Asia/Jakarta

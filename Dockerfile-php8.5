@@ -1,0 +1,44 @@
+FROM php:8.5-fpm
+
+ENV TZ=Asia/Jakarta
+
+WORKDIR /code
+
+# System dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    libpq-dev \
+    libzip-dev \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure GD before compiling
+RUN docker-php-ext-configure gd \
+    --with-freetype \
+    --with-jpeg
+
+# PHP extensions
+RUN docker-php-ext-install -j"$(nproc)" \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    zip \
+    mysqli \
+    pdo_pgsql \
+    pgsql \
+    gd \
+    opcache
+
+# Redis extension
+RUN pecl install redis \
+    && docker-php-ext-enable redis \
+    && pecl clear-cache
+
+ENV PHP_INI_DIR=/usr/local/etc/php
+
+USER www-data
