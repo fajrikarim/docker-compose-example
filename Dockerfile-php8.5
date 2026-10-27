@@ -31,8 +31,7 @@ RUN docker-php-ext-install -j"$(nproc)" \
     mysqli \
     pdo_pgsql \
     pgsql \
-    gd \
-    opcache
+    gd 
 
 # Redis extension
 RUN pecl install redis \
